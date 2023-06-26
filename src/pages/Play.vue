@@ -1,18 +1,18 @@
 <template>
-    <div class="index">
+    <div class="play">
         <Header></Header>
-        <Catalog></Catalog>
+        <Player></Player>
     </div>
 </template>
 
 <script>
     import Header from '@/components/common/Header.vue';
-    import Catalog from '@/components/private/Index/Catalog.vue';
+    import Player from '@/components/private/Play/Player.vue';
     export default {
-        name: 'Index' ,
+        name: 'Play',
         components: {
             Header,
-            Catalog
+            Player
         }
     }
 </script>

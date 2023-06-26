@@ -1,6 +1,7 @@
 <template>
     <div class="catalog">
-        <div class="hot">
+        <div class="catalog-header">
+            <div class="hot">
             <div class="hot-icon-wrapper">
                 <div class="hot-icon el-icon-magic-stick"></div>
             </div>
@@ -17,6 +18,7 @@
                 <div class="community-icon el-icon-house"></div>
             </div>
             <div class="community-text">社 区</div>
+        </div>
         </div>
         <div class="classify">
             <div class="classify-anime">番 剧</div>
@@ -64,13 +66,22 @@
     position: relative;
     z-index: 99;
 }
+.catalog-header{
+    width: 160px;
+    height: 65px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 520px), -50%);
+}
 .hot{
     width: 40px;
     height: 65px;
 
     position: absolute;
     top: 50%;
-    left: 200px;
+    left: 0;
     transform: translate(0,-50%);
 }
 .channel{
@@ -79,8 +90,8 @@
 
     position: absolute;
     top: 50%;
-    left: 260px;
-    transform: translate(0,-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .community{
     width: 40px;
@@ -88,7 +99,7 @@
 
     position: absolute;
     top: 50%;
-    left: 320px;
+    right: 0;
     transform: translate(0,-50%);
 }
 .hot:hover,.channel:hover,.community:hover{
@@ -152,8 +163,8 @@
 
     position: absolute;
     top: 50%;
-    left: 400px;
-    transform: translate(0, -50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .classify > div{
     width: 70px;
@@ -276,8 +287,8 @@
 
     position: absolute;
     top: 50%;
-    left: 1230px;
-    transform: translate(0, -50%);
+    left: 50%;
+    transform: translate(calc(-50% + 520px), -50%);
 }
 .catalog-other > div{
     width: 80px;

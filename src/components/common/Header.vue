@@ -2,11 +2,15 @@
     <div class="header">
         <div class="header-content">
             <div class="left">
-                <div class="homepage">首页</div>
-                <div class="anime item">番剧</div>
+                <div class="homepage" @click="to_homepage()">
+                    <div class="homepage-icon"></div>
+                    <div class="homepage-text">主页</div>
+                </div>
+                <div class="anime item" @click="to_anime()">番剧</div>
                 <div class="film item">电影</div>
-                <div class="documentary item">纪录片</div>
                 <div class="music item">音乐</div>
+                <div class="comic item">漫画</div>
+                <div class="vip item">会员</div>
             </div>
             <div class="middle">
                 <div class="search">
@@ -80,7 +84,15 @@
 
 <script>
     export default {
-        name: 'Header'
+        name: 'Header',
+        methods: {
+            to_homepage(){
+                this.$router.push({name: 'index'})
+            },
+            to_anime(){
+                this.$router.push({name: 'play'})
+            }
+        }
     }
 </script>
 
@@ -275,7 +287,7 @@
         transform: translate(0,-50%);
     }
     .homepage{
-        width: 40px;
+        width: 80px;
         height: 40px;
         text-align: center;
         line-height: 40px;
@@ -283,8 +295,34 @@
 
         position: absolute;
         top: 50%;
-        left: 10px;
+        left: 20px;
         transform: translate(0,-50%);
+    }
+    .homepage-icon{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-image: url('../../assets/cilicili.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+    }
+    .homepage-text{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #ffffff;
+
+        position: absolute;
+        top: 50%;
+        right: 6px;
+        transform: translate(0, -50%);
     }
     .anime{
         width: 40px;
@@ -295,7 +333,7 @@
 
         position: absolute;
         top: 50%;
-        left: 60px;
+        left: 100px;
         transform: translate(0,-50%);
     }
     .film{
@@ -307,19 +345,7 @@
 
         position: absolute;
         top: 50%;
-        left: 110px;
-        transform: translate(0,-50%);
-    }
-    .documentary{
-        width: 50px;
-        height: 40px;
-        text-align: center;
-        line-height: 40px;
-        color: whitesmoke;
-
-        position: absolute;
-        top: 50%;
-        left: 160px;
+        left: 146px;
         transform: translate(0,-50%);
     }
     .music{
@@ -331,7 +357,31 @@
 
         position: absolute;
         top: 50%;
-        left: 220px;
+        left: 192px;
+        transform: translate(0,-50%);
+    }
+    .comic{
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        color: whitesmoke;
+
+        position: absolute;
+        top: 50%;
+        left: 238px;
+        transform: translate(0,-50%);
+    }
+    .vip{
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        color: whitesmoke;
+
+        position: absolute;
+        top: 50%;
+        left: 284px;
         transform: translate(0,-50%);
     }
     /* 文字抖动 */
@@ -355,6 +405,9 @@
         margin-right: 0px;
         margin-top: -3px	;
     }
+}
+.user{
+    height: 0;
 }
 .user-info{
     width: 300px;
@@ -395,6 +448,7 @@
     background-color: red;
     color: white;
     font-weight: bold;
+    border-radius: 3px;
 
     position: absolute;
     top: 50%;
