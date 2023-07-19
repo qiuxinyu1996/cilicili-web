@@ -1,8 +1,7 @@
 <template>
     <div class="m-video" :class="{'u-video-hover': !hidden}" :style="`width: ${width}px; height: ${height}px;`">
       <video
-        ref="veo"
-        controlslist="nodownload"
+        ref="videoRef"
         :style="`object-fit: ${zoom};`"
         :src="src"
         :poster="veoPoster"
@@ -42,7 +41,7 @@
       },
       second: { 
         type: Number,
-        default: 1
+        default: 2
       },
       width: { 
         type: Number,
@@ -94,9 +93,9 @@
     },
     mounted () {
       // 禁用右键菜单
-      document.oncontextmenu = function(){
-        return false;
-      }
+      // document.oncontextmenu = function(){
+      //   return false;
+      // }
       if (this.autoplay) {
         this.hidden = true
         this.originPlay = false
@@ -104,32 +103,37 @@
     },
     methods: {
       getPoster () { 
-        this.$refs.veo.currentTime = this.second
+        this.$refs.videoRef.currentTime = this.second
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
-        canvas.width = this.$refs.veo.videoWidth
-        canvas.height = this.$refs.veo.videoHeight
-        ctx.drawImage(this.$refs.veo, 0, 0, canvas.width, canvas.height)
+        canvas.width = this.$refs.videoRef.videoWidth
+        canvas.height = this.$refs.videoRef.videoHeight
+        ctx.drawImage(this.$refs.videoRef, 0, 0, canvas.width, canvas.height)
         this.veoPoster = canvas.toDataURL('image/png')
       },
       onPlay () {
+        console.log('onplay')
         if (this.originPlay) {
-          this.$refs.veo.currentTime = 0
+          this.$refs.videoRef.currentTime = 0
           this.originPlay = false
         }
         if (this.autoplay) {
-          this.$refs.veo.pause()
+          this.$refs.videoRef.pause()
+          console.log('pause')
         } else {
           this.hidden = true
-          this.$refs.veo.play()
+          this.$refs.videoRef.play()
+          console.log('play')
         }
       },
       onPause () {
         this.hidden = false
+        console.log('onPause')
       },
       onPlaying () {
         this.hidden = true
-      }
+        console.log('onPlaying')
+      },
     }
   }
   </script>

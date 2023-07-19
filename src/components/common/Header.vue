@@ -6,7 +6,7 @@
                     <div class="homepage-icon"></div>
                     <div class="homepage-text">主页</div>
                 </div>
-                <div class="anime item" @click="to_anime()">番剧</div>
+                <div class="anime item">番剧</div>
                 <div class="film item">电影</div>
                 <div class="music item">音乐</div>
                 <div class="comic item">漫画</div>
@@ -25,10 +25,10 @@
                     <div class="user-icon"></div>
                     <div class="user-detail">
                         <div class="user-info">
-                            <div class="user-name">qxy大魔王</div>
+                            <div class="user-name">{{ $store.state.user?$store.state.user.nickname:'null' }}</div>
                             <div class="user-account">
                                 <div class="user-level">Lv6</div>
-                                <div class="user-coin">硬币：860</div>
+                                <div class="user-coin">硬币:860</div>
                             </div>
                             <div class="user-other">
                                 <div class="user-follow">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="user-logout-wrapper">
-                            <div class="user-logout">
+                            <div class="user-logout" @click="logout()">
                                 <div class="user-logout-icon el-icon-switch-button"></div>
                                 <div class="user-logout-text">退出登录</div>
                                 <div class="to-right-icon el-icon-arrow-right"></div>
@@ -75,7 +75,7 @@
                 <div class="action item">动态</div>
                 <div class="collect item">收藏</div>
                 <div class="history item">历史</div>
-                <div class="submit item">投稿</div>
+                <div class="submit item" @click="submit()">投稿</div>
             </div>
         </div>
         <div class="header-other"></div>
@@ -83,14 +83,48 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: 'Header',
         methods: {
-            to_homepage(){
+            to_homepage() {
                 this.$router.push({name: 'index'})
             },
-            to_anime(){
-                this.$router.push({name: 'play'})
+            logout() {
+                axios.post('/api/user/logout', {
+                    token: localStorage.getItem('token')
+                })
+                .then(
+                    (resp) => {
+                        if(!resp.data.success) {
+                            this.$message.error('登出异常');
+                        }
+                        localStorage.removeItem('token')
+                        localStorage.removeItem('userInfo')
+                        localStorage.removeItem('player')
+                        this.$router.push({name: 'login'})
+                    }
+                ).catch(
+                    (err) => {
+                        console.log(err)
+                    }
+                )
+            },
+            submit() {
+                axios.post('/api/user/submit')
+                .then(
+                    (resp) => {
+                        if(resp.data.success) {
+                            this.$message.success('投稿成功')
+                        }else {
+                            this.$message.error('投稿失败');
+                        }
+                    }
+                ).catch(
+                    (err) => {
+                        console.log(err)
+                    }
+                )
             }
         }
     }
