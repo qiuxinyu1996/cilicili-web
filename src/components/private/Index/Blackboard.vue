@@ -19,6 +19,20 @@
         },
         methods: {
           goto_player(img) {
+            var videoId = img.id
+            this.$axios.get('/api/video/getDetailList?videoId=' + videoId)
+            .then(
+                (resp) => {
+                    console.log('this is getDetailList')
+                    localStorage.setItem('videoList', JSON.stringify(resp.data.data))
+                    this.$store.state.videoList = resp.data.data
+                }
+            ).catch(
+                (err) => {
+                    console.log(err)
+                }
+            )
+          
             var player = {
               videoId: img.id,
               name: img.name,

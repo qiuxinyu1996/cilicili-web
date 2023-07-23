@@ -50,8 +50,9 @@
         },
         created() {
             this.$store.state.videoList = JSON.parse(localStorage.getItem('videoList'))
-            
-            var videoId = this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].id
+            console.log('+++++++++++++++++++++++++++++++++++')
+            console.log(this.$router.currentRoute.query.vid)
+            var videoId = this.$router.currentRoute.query.vid
             this.$axios.get('/api/video/getDetailList?videoId=' + videoId)
             .then(
                 (resp) => {

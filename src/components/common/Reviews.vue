@@ -95,7 +95,7 @@
         },
         mounted() {
             var videoList = this.$store.state.videoList
-            this.$axios.get('/api/video/getReview?videoId=' + videoList.listDetail[videoList.current-1].id)
+            this.$axios.get('/api/video/getReview?videoId=' + this.$router.currentRoute.query.vid)
             .then(
                 (resp) => {
                     this.$store.commit('setReviewList', resp.data.data)
