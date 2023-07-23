@@ -15,7 +15,7 @@
                 发布
             </div>
         </div>
-        <div v-if="JSON.stringify(reviewList) != '[]'">
+        <div class="other-review" v-if="JSON.stringify(reviewList) != '[]'">
             <div class="review-wrapper" v-bind:style="{'z-index':999-index}" v-for="(review, index) in reviewList">
                 <div class="first-review">
                     <Review  v-bind:style="{'z-index':999-index}" :review="review"></Review> 
@@ -50,7 +50,7 @@
                     return
                 }
                 this.$axios.post("/api/video/review", {
-                    reviewVideoId: this.$store.state.player.videoId,
+                    reviewVideoId: this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].id,
                     userId: this.$store.state.user.id,
                     reviewContent: this.myReview,
                     reviewTime: new Date(),
@@ -61,8 +61,21 @@
                     (resp) => {
                         if(resp.data.success) {
                             this.$message.success('发布成功')
+                            this.myReview = ''
                             this.readyReply = false
-                            this.$router.go(0);
+                            
+                            // 发布后刷新评论区
+                            var videoList = this.$store.state.videoList
+                            this.$axios.get('/api/video/getReview?videoId=' + videoList.listDetail[videoList.current-1].id)
+                            .then(
+                                (resp) => {
+                                    this.$store.commit('setReviewList', resp.data.data)
+                                }
+                            ).catch(
+                                (err) => {
+                                    console.log(err)
+                                }
+                            ) 
                         }else {
                             this.$message.error('发布失败')
                         }
@@ -81,6 +94,17 @@
             }
         },
         mounted() {
+            var videoList = this.$store.state.videoList
+            this.$axios.get('/api/video/getReview?videoId=' + videoList.listDetail[videoList.current-1].id)
+            .then(
+                (resp) => {
+                    this.$store.commit('setReviewList', resp.data.data)
+                }
+            ).catch(
+                (err) => {
+                    console.log(err)
+                }
+            ) 
             // setTimeout(() => {
             //     console.log('this.$route.query.vid')
             //     console.log(this.$route.query.vid)
@@ -129,9 +153,9 @@
         top: 10px;
     }
     .my-review-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 25px;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
         background-image: url('@/assets/user.webp');
         background-repeat: no-repeat;
         background-size: cover;
@@ -170,5 +194,9 @@
     .my-review-input>>>.el-textarea__inner:hover {
         background-color: #ffffff;
         border: #c9ccd0 1px solid;
+    }
+    .other-review {
+        position: absolute;
+        left: 20px;
     }
 </style>

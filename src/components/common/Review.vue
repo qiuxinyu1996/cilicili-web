@@ -87,7 +87,7 @@
                     return
                 }
                 this.$axios.post("/api/video/review", {
-                    reviewVideoId: this.$store.state.player.videoId,
+                    reviewVideoId: this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].id,
                     userId: this.$store.state.user.id,
                     reviewContent: this.replyText,
                     reviewTime: new Date(),
@@ -98,8 +98,21 @@
                     (resp) => {
                         if(resp.data.success) {
                             this.$message.success('回复成功')
+                            this.replyText = ''
                             this.readyReply = false
-                            this.$router.go(0);
+                            
+                            // 回复后刷新评论区
+                            var videoList = this.$store.state.videoList
+                            this.$axios.get('/api/video/getReview?videoId=' + videoList.listDetail[videoList.current-1].id)
+                            .then(
+                                (resp) => {
+                                    this.$store.commit('setReviewList', resp.data.data)
+                                }
+                            ).catch(
+                                (err) => {
+                                    console.log(err)
+                                }
+                            ) 
                         }else {
                             this.$message.error('回复失败')
                         }

@@ -17,7 +17,10 @@ export default new Vuex.Store({
     },
     reviewList: [
 
-    ]
+    ],
+    videoList: {
+
+    }
   },
   getters: {
     
@@ -35,6 +38,9 @@ export default new Vuex.Store({
     },
     setReviewList(state, reviewList) {
       state.reviewList = reviewList
+    },
+    setVideoList(state, videoList) {
+      state.videoList = videoList
     },
   },
   // 操作异步操作mutation

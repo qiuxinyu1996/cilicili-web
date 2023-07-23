@@ -2,6 +2,7 @@
     <div class="m-video" :class="{'u-video-hover': !hidden}" :style="`width: ${width}px; height: ${height}px;`">
       <video
         ref="videoRef"
+        id="videoRef"
         :style="`object-fit: ${zoom};`"
         :src="src"
         :poster="veoPoster"
