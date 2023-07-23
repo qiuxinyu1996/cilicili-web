@@ -1,11 +1,11 @@
 <template>
-    <div class="number-list">
+    <div class="number-list" :key="this.selected">
         <div class="list-header">
-            <div class="list-header-text">正片({{ $store.state.player.current }}/{{ $store.state.player.total }})</div>
+            <div class="list-header-text">正片({{ selected }}/{{ $store.state.player.total }})</div>
         </div>
         <div class="list-content">
             <div class="list-content-number-wrapper" v-for="item in $store.state.player.total">
-                <div v-if="item === selected" class="selected">
+                <div v-if="item == selected" class="selected">
                     {{ item }}
                 </div>
                 <div v-else class="unselected" @click="changeSelected(item)">
@@ -21,13 +21,33 @@
         name: 'NumberList',
         data(){
             return {
-                selected: 1,
+                selected: this.$route.query.p,
             }
         },
         methods: {
+            /**
+             * 视频
+             *  视频源
+             * 按钮
+             *  p
+             * 评论区
+             *  vid
+             *
+             * @param {*} item 
+             */
             changeSelected(item){
-                console.log('item' + item)
                 this.selected = item
+                setTimeout(() => {
+                    this.$router.push({
+                        name: 'play',
+                        query: {
+                            vid: this.$store.state.player.videoId,
+                            p: item,
+                        }
+                    })
+                }, 100);
+                console.log('item' + item)
+
                 this.$axios.post('/api/video/getSource',{
                     name: this.$store.state.player.name,
                     current: item,
@@ -35,32 +55,40 @@
                     (resp) => {
                         console.log(resp.data.data === null)
                         if(resp.data.data != null) {
-                            this.$store.state.player.source = resp.data.data
+                            this.$store.state.player.videoId = resp.data.data.videoId
+                            this.$store.state.player.source = resp.data.data.source
                             this.$store.state.player.current = item
                             this.$refs.videoRef.load()
                             this.$refs.videoRef.play()
                         } else {
                             this.$message.error('视频源不存在')
                         }
-
                     }
                 ).catch(
                     (err) => {
                         console.log(err)
                     }
                 )
+                // 更新播放信息缓存
+                setTimeout(() => {
+                    localStorage.setItem('player', JSON.stringify(this.$store.state.player))
+                }, 100);
+                // 获取评论区信息
+                setTimeout(() => {
+                    this.$axios.get('/api/video/getReview?videoId=' + this.$store.state.player.videoId)
+                    .then(
+                        (resp) => {
+                            console.log(resp.data.data)
+                            this.$store.commit('setReviewList', resp.data.data)
+                        }
+                    ).catch(
+                        (err) => {
+                            console.log(err)
+                        }
+                    ) 
+                }, 100);
             }
         },
-        props: {
-            total: {
-                type: String,
-                required: true
-            },
-            current: {
-                type: String,
-                required: true
-            }
-        }
     }
 </script>
     
@@ -71,11 +99,6 @@
         background-color: whitesmoke;
         border-radius: 10px;
         overflow: auto;
-
-        position: relative;
-        top: 15px;
-        left: 50%;
-        transform: translate(calc(-50% + 615px), 0);
     }
     .list-header{
         width: 400px;

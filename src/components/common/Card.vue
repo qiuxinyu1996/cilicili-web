@@ -20,14 +20,10 @@
     .card {
         width: 300px;
         height: 250px;
-        /* background-color: whitesmoke; */
         border-radius: 10px;
 
         position: absolute;
         z-index: 8;
-        /* top: 50%;
-        left: 50%;
-        transform: translate(calc(-50% + 300px), -50%); */
     }
     .card:hover{
         cursor: pointer;

@@ -14,7 +14,10 @@ export default new Vuex.Store({
     },
     player: {
 
-    }
+    },
+    reviewList: [
+
+    ]
   },
   getters: {
     
@@ -29,7 +32,10 @@ export default new Vuex.Store({
     },
     setPlayer(state, player) {
       state.player = player
-    }
+    },
+    setReviewList(state, reviewList) {
+      state.reviewList = reviewList
+    },
   },
   // 操作异步操作mutation
   actions: {

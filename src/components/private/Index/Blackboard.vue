@@ -1,9 +1,8 @@
 <template>
     <div class="blackboard">
-        <el-carousel :interval="5000" arrow="hover" height="500px" @click="alert('1')">
+        <el-carousel :interval="3000" arrow="hover" height="500px" @click="alert('1')">
           <el-carousel-item v-for="(img,index) in imgList" :key="index">
             <div @click="goto_player(img)" style="width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover;" :style=" {'background-image':`url(${img.cover})`}">
-              <!-- <h1>{{ img }}</h1> -->
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -21,6 +20,7 @@
         methods: {
           goto_player(img) {
             var player = {
+              videoId: img.id,
               name: img.name,
               source: img.source,
               current: img.current,
@@ -28,7 +28,13 @@
             }
             localStorage.setItem('player', JSON.stringify(player))
             this.$store.commit('setPlayer',player)
-            this.$router.push({name: 'play'})
+            this.$router.push({
+              name: 'play',
+              query: {
+                vid: player.videoId,
+                p: player.current,
+              }
+            })
           }
         },
         computed: {

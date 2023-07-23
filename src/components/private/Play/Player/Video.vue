@@ -175,10 +175,10 @@
       }
     }
   }
-  .m-video{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(calc(-50% - 200px), -50%);
-  }
+  // .m-video{
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(calc(-50% - 200px), -50%);
+  // }
   </style>

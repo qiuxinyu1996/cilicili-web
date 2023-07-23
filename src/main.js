@@ -18,7 +18,6 @@ axios.interceptors.request.use((config) => {
 	return Promise.reject(error);
 });
  
- 
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios; 
