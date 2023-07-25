@@ -23,4 +23,10 @@ export default {
     margin: 0;
     padding: 0;
   }
+  #app {
+    width: 1650px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 </style>

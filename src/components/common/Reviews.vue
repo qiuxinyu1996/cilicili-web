@@ -21,7 +21,10 @@
                     <Review  v-bind:style="{'z-index':999-index}" :review="review"></Review> 
                 </div>
                 <div class="second-review" v-for="(reply, kidIndex) in review.replyList">
-                    <Review  v-bind:style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
+                    <Review v-if="kidIndex+1<displayReview[index]"  v-bind:style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
+                    <div class="see-more" v-if="reviewList.length>displayReview[index] && kidIndex==displayReview[index]-1" @click="displayReview.splice(index,1,displayReview[index]+3)">
+                        展示更多评论
+                    </div>
                 </div>
             </div>       
         </div>
@@ -41,6 +44,7 @@
         data() {
             return {
                 myReview: '',
+                displayReview: []
             }
         },
         methods: {
@@ -94,7 +98,11 @@
             }
         },
         mounted() {
-            var videoList = this.$store.state.videoList
+            setTimeout(() => {
+                for(var i = 0; i < this.$store.state.reviewList.length; i++) {
+                    this.displayReview.push(4)
+                }
+            }, 500);
             this.$axios.get('/api/video/getReview?videoId=' + this.$router.currentRoute.query.vid)
             .then(
                 (resp) => {
@@ -127,7 +135,7 @@
     .reviews {
         height: 500px;
         position: relative;
-        display: inline-block;
+        /* display: inline-block; */
     }
     .review-wrapper {
         position: relative;
@@ -198,5 +206,17 @@
     .other-review {
         position: absolute;
         left: 20px;
+    }
+    .see-more {
+        width: 200px;
+        height: 20px;
+        color: #9499a0;
+        font-size: 16px;
+        position: relative;
+        left: 59px;
+    }
+    .see-more:hover {
+        cursor: pointer;
+        color: #00aeec;
     }
 </style>

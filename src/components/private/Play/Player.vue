@@ -14,9 +14,9 @@
                 <Card></Card>
             </div>
         </div>
-        <div class="player-help">
+        <!-- <div class="player-help">
 
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -35,7 +35,7 @@
         },
         data() {
             return {
-                // src: api + prefix + this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].source
+    
             }
         },
         computed: {
@@ -108,7 +108,7 @@
 <style scoped>
     .player{
         width: 100%;
-        /* height: 700px; */
+        height: 100%;
         background-color: #ffffff;
 
         position: relative
