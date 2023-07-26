@@ -46,11 +46,11 @@
       },
       width: { 
         type: Number,
-        default: 1200
+        default: 1100
       },
       height: { 
         type: Number,
-        default: 670
+        default: 620
       },
       autoplay: { 
         type: Boolean,

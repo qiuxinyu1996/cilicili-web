@@ -1,22 +1,25 @@
 <template>
     <div class="player">
+        <div class="video-title">
+            <h1>{{ this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].title }}</h1>
+        </div>
         <div class="video">
             <Video :src="src"/>
         </div>
-        <div class="numberList">
+        <div class="up-info">
+
+        </div>
+        <div class="number-list-wrapper">
             <NumberList></NumberList>
         </div>
-        <div class="review-wrapper">
+        <div class="reviews-wrapper">
             <Reviews></Reviews>
         </div>
-        <div class="player-other">
+        <div class="play-cards">
             <div class="card" v-for="item in 3">
                 <Card></Card>
             </div>
         </div>
-        <!-- <div class="player-help">
-
-        </div> -->
     </div>
 </template>
 
@@ -113,38 +116,46 @@
 
         position: relative
     }
-    .review-wrapper {
-        width: 1200px;
-        position: absolute;
-        top: 700px;
-        left: 20px;
+    .reviews-wrapper {
+        width: 1100px;
+        height: 1000px;
+        /* background-color: blue; */
+        position: relative;
+        display: inline-block;
+        top: -200px;
+        left: -270px;
+        overflow: visible;
     }
-    .player-other {
-        width: 300px;
-        height: 600px;
+    .play-cards {
+        width: 350px;
+        height: 500px;
 
-        position: absolute;
-        display: flex;
+        position: relative;
+        display: inline-block;
         flex-wrap: wrap;
 
-        top: 710px;
-        left: 1240px;
+        top: -1190px;
+        left: 1220px;
     }
     .video {
-        width: 1200px;
-        height: 670px;
+        width: 1100px;
+        height: 620px;
 
-        position: absolute;
-        top: 20px;
-        left: 20px;
+        position: relative;
+        display: inline-block;
+        top: 0;
+        left: 80px;
     }
-    .numberList {
-        width: 400px;
-        height: 670px;
+    .number-list-wrapper {
+        width: 350px;
+        height: 300px;
 
-        position: absolute;
-        top: 20px;
-        left: 1230px;
+        position: relative;
+        display: inline-block;
+        /* top: -1320px;
+        left: 1220px; */
+        left: 1220px;
+        top: -620px;
     }
     .card {
         width: 300px;
@@ -159,5 +170,24 @@
         position: fixed;
         left: 1560px;
         top: 520px;
+    }
+    .video-title {
+        width: 1100px;
+        height: 100px;
+        line-height: 100px;
+        /* background-color: red; */
+        position: relative;
+        display: inline-block;
+        left: 80px;
+    }
+    .up-info {
+        width: 350px;
+        height: 100px;
+        /* background-color: gold; */
+        position: relative;
+        display: inline-block;
+
+        top: -625px;
+        left: 120px;
     }
 </style>

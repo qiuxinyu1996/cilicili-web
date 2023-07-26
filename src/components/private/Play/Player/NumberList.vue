@@ -41,83 +41,28 @@
                 videoList.current = item
                 localStorage.setItem('videoList', JSON.stringify(videoList))
                 this.$store.state.videoList = videoList
-                console.log(videoList)
-                var vid = videoList.listDetail[videoList.current-1].id
-                console.log(vid)
-            
                 this.$router.push({
-                name: 'play',
-                query: {
-                    vid: videoList.listDetail[videoList.current-1].id,
-                    p: item,
-                }
-            })
-                // this.selected = item
-                // setTimeout(() => {
-                //     this.$router.push({
-                //         name: 'play',
-                //         query: {
-                //             vid: this.$store.state.player.videoId,
-                //             p: item,
-                //         }
-                //     })
-                // }, 100);
-                // console.log('item' + item)
-
-                // this.$axios.post('/api/video/getSource',{
-                //     name: this.$store.state.player.name,
-                //     current: item,
-                // }).then(
-                //     (resp) => {
-                //         console.log(resp.data.data === null)
-                //         if(resp.data.data != null) {
-                //             this.$store.state.player.videoId = resp.data.data.videoId
-                //             this.$store.state.player.source = resp.data.data.source
-                //             this.$store.state.player.current = item
-                //             this.$refs.videoRef.load()
-                //             this.$refs.videoRef.play()
-                //         } else {
-                //             this.$message.error('视频源不存在')
-                //         }
-                //     }
-                // ).catch(
-                //     (err) => {
-                //         console.log(err)
-                //     }
-                // )
-                // // 更新播放信息缓存
-                // setTimeout(() => {
-                //     localStorage.setItem('player', JSON.stringify(this.$store.state.player))
-                // }, 100);
-                // // 获取评论区信息
-                // setTimeout(() => {
-                //     this.$axios.get('/api/video/getReview?videoId=' + this.$store.state.player.videoId)
-                //     .then(
-                //         (resp) => {
-                //             console.log(resp.data.data)
-                //             this.$store.commit('setReviewList', resp.data.data)
-                //         }
-                //     ).catch(
-                //         (err) => {
-                //             console.log(err)
-                //         }
-                //     ) 
-                // }, 100);
+                    name: 'play',
+                    query: {
+                        vid: videoList.listDetail[videoList.current-1].id,
+                        p: item,
+                    }
+                })
             }
         },
     }
 </script>
     
-<style>
+<style scoped>
     .number-list{
-        width: 400px;
-        height: 670px;
-        background-color: whitesmoke;
+        width: 350px;
+        height: 100%;
+        position: relative;
+        background-color: #f1f2f3;
         border-radius: 10px;
-        overflow: auto;
     }
     .list-header{
-        width: 400px;
+        width: 350px;
         height: 45px;
         
         position: absolute;
@@ -134,25 +79,28 @@
 
         position: absolute;
         top: 0;
-        left: 15px;
+        left: 5px;
     }
     .list-content{
-        width: 400px;
-        padding: 0 20px;
+        width: 350px;
+        height: 250px;
+        padding: 0 10px;
         box-sizing: border-box;
-        display: flex;
+        display: inline-flex;
         flex-wrap: wrap;
+        overflow: auto;
 
         position: absolute;
         top: 45px;
         left: 50%;
         transform: translate(-50%, 0);
     }
+    .list-content::-webkit-scrollbar { width: 0 !important }
     .selected{
-        width: 60px;
-        height: 60px;
+        width: 54px;
+        height: 54px;
         margin: 6px 6px;
-        line-height: 60px;
+        line-height: 54px;
         text-align: center;
         color: #ffffff;
         font-size: 16px;
@@ -163,10 +111,10 @@
         cursor: pointer;
     }
     .unselected{
-        width: 60px;
-        height: 60px;
+        width: 54px;
+        height: 54px;
         margin: 6px 6px;
-        line-height: 60px;
+        line-height: 54px;
         text-align: center;
         color: black;
         font-size: 16px;
@@ -178,5 +126,8 @@
         border: blue;
         background-color: #dff6fd;
         outline: #00aeec 1px solid;
+    }
+    .list-content-number-wrapper {
+        display: inline-block;
     }
 </style>

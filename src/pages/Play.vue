@@ -1,7 +1,11 @@
 <template>
     <div class="play">
-        <Header></Header>
-        <Player></Player>
+        <div class="header">
+            <Header></Header>
+        </div>
+        <div class="player">
+            <Player></Player>        
+        </div>
     </div>
 </template>
 
@@ -17,6 +21,8 @@
     }
 </script>
 
-<style>
-
+<style scoped>
+    .header{
+        position: relative;
+    }
 </style>

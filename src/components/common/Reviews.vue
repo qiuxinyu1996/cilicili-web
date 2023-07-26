@@ -17,18 +17,20 @@
         </div>
         <div class="other-review" v-if="JSON.stringify(reviewList) != '[]'">
             <div class="review-wrapper" v-bind:style="{'z-index':999-index}" v-for="(review, index) in reviewList">
-                <div class="first-review">
-                    <Review  v-bind:style="{'z-index':999-index}" :review="review"></Review> 
-                </div>
-                <div class="second-review" v-for="(reply, kidIndex) in review.replyList">
-                    <Review v-if="kidIndex+1<displayReview[index]"  v-bind:style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
-                    <div class="see-more" v-if="reviewList.length>displayReview[index] && kidIndex==displayReview[index]-1" @click="displayReview.splice(index,1,displayReview[index]+3)">
-                        展示更多评论
+                <div v-if="index<displayFirstReview">
+                    <div class="first-review">
+                        <Review  v-bind:style="{'z-index':999-index}" :review="review"></Review> 
+                    </div>
+                    <div class="second-review" v-for="(reply, kidIndex) in review.replyList">
+                        <Review v-if="kidIndex<displaySecondReview[index]"  v-bind:style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
+                        <div class="see-more" v-if="review.replyList.length>displaySecondReview[index] && kidIndex==displaySecondReview[index]-1" @click="displaySecondReview.splice(index,1,displaySecondReview[index]+3)">
+                            展示更多评论
+                        </div>
                     </div>
                 </div>
             </div>       
         </div>
-        <div v-else>
+        <div class="empty" v-else>
             <el-empty :image-size="300" description="人迹罕至，空空如也"></el-empty>
         </div>
     </div>
@@ -44,7 +46,14 @@
         data() {
             return {
                 myReview: '',
-                displayReview: []
+                // 分别控制一级和二级评论展示条数
+                displayFirstReview: 10,
+                displaySecondReview: []
+            }
+        },
+        computed: {
+            reviewList() {
+                return this.$store.state.reviewList
             }
         },
         methods: {
@@ -79,7 +88,9 @@
                                 (err) => {
                                     console.log(err)
                                 }
-                            ) 
+                            )
+
+                            this.displaySecondReview.unshift(3)
                         }else {
                             this.$message.error('发布失败')
                         }
@@ -90,17 +101,12 @@
                         this.$message.error('回复失败')
                     }
                 )
-            }
-        },
-        computed: {
-            reviewList() {
-                return this.$store.state.reviewList
-            }
+            },
         },
         mounted() {
             setTimeout(() => {
                 for(var i = 0; i < this.$store.state.reviewList.length; i++) {
-                    this.displayReview.push(4)
+                    this.displaySecondReview.push(3)
                 }
             }, 500);
             this.$axios.get('/api/video/getReview?videoId=' + this.$router.currentRoute.query.vid)
@@ -113,29 +119,23 @@
                     console.log(err)
                 }
             ) 
-            // setTimeout(() => {
-            //     console.log('this.$route.query.vid')
-            //     console.log(this.$route.query.vid)
-            //             this.$axios.get('/api/video/getReview?videoId=' + this.$route.query.vid)
-            //             .then(
-            //                 (resp) => {
-            //                     this.$store.commit('setReviewList', resp.data.data)
-            //                 }
-            //             ).catch(
-            //                 (err) => {
-            //                     console.log(err)
-            //                 }
-            //             )    
-            // }, 200);
-        },
-    }
+            window.onscroll = () =>{
+                if (getScrollHeight() <= getWindowHeight() + getDocumentTop()) {
+                    this.displayFirstReview += 10
+                    console.log(this.displayFirstReview)
+                }      
+            }
+        }
+}
 </script>
 
 <style scoped>
     .reviews {
-        height: 500px;
+        width: 1100px;
+        /* height: 1000px; */
         position: relative;
-        /* display: inline-block; */
+        display: inline-block;
+        /* overflow: auto; */
     }
     .review-wrapper {
         position: relative;
@@ -150,11 +150,11 @@
         /* z-index: 1; */
     }
     .noReview{
-        width: 1200px;
+        width: 11200px;
         height: 300px;
     }
     .my-review {
-        width: 1200px;
+        width: 1100px;
         height: 100px;
 
         position: relative;
@@ -172,7 +172,7 @@
         /* left: 20px; */
     }
     .my-review-input {
-        width: 1030px;
+        width: 940px;
         height: 50px;
 
         position: absolute;
@@ -188,7 +188,7 @@
         color: #ffffff;
 
         position: absolute;
-        left: 1120px;
+        left: 1025px;
     }
     .my-review-btn:hover {
         cursor: pointer;
@@ -211,12 +211,17 @@
         width: 200px;
         height: 20px;
         color: #9499a0;
-        font-size: 16px;
+        font-size: 14px;
         position: relative;
         left: 59px;
     }
     .see-more:hover {
         cursor: pointer;
         color: #00aeec;
+    }
+    .empty {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 </style>

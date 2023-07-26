@@ -22,7 +22,7 @@
         height: 250px;
         border-radius: 10px;
 
-        position: absolute;
+        position: relative;
         z-index: 8;
     }
     .card:hover{

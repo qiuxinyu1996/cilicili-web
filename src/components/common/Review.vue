@@ -138,11 +138,11 @@
 
 <style scoped>
     .review {
-        width: 1150px;
+        width: 950px;
         position: relative;;
     }
     .header {
-        width: 1150px;
+        width: 950px;
         height: 40px;
         line-height: 40px;
         /* background-color: whitesmoke; */
@@ -172,20 +172,22 @@
         cursor: pointer;
     }
     .content {
-        width: 1090px;
+        width: 890px;
         font-size: 16px;
         color: #18191c;
         position: relative;
+        display: inline-block;
         z-index: 80;
         left: 60px;
     }
     .footer {
-        width: 1090px;
+        width: 890px;
         height: 32px;
         line-height: 32px;
         font-size: 13px;
         color: #9499a0;
         position: relative;
+        display: inline-block;
         z-index: 70;
         left: 60px;
     }
