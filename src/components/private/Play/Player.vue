@@ -7,7 +7,7 @@
             <Video :src="src"/>
         </div>
         <div class="up-info">
-
+           
         </div>
         <div class="number-list-wrapper">
             <NumberList></NumberList>
@@ -122,7 +122,7 @@
         /* background-color: blue; */
         position: relative;
         display: inline-block;
-        top: -200px;
+        top: -300px;
         left: -270px;
         overflow: visible;
     }
@@ -148,7 +148,7 @@
     }
     .number-list-wrapper {
         width: 350px;
-        height: 300px;
+        height: 400px;
 
         position: relative;
         display: inline-block;
@@ -187,7 +187,7 @@
         position: relative;
         display: inline-block;
 
-        top: -625px;
+        top: -700px;
         left: 120px;
     }
 </style>

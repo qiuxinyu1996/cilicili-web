@@ -56,7 +56,7 @@
 <style scoped>
     .number-list{
         width: 350px;
-        height: 100%;
+        height: 320px;
         position: relative;
         background-color: #f1f2f3;
         border-radius: 10px;
@@ -83,10 +83,10 @@
     }
     .list-content{
         width: 350px;
-        height: 250px;
+        height: 270px;
         padding: 0 10px;
         box-sizing: border-box;
-        display: inline-flex;
+        display: inline-block;
         flex-wrap: wrap;
         overflow: auto;
 
