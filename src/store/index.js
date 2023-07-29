@@ -20,7 +20,10 @@ export default new Vuex.Store({
     ],
     videoList: {
 
-    }
+    },
+    videoCards: [
+
+    ]
   },
   getters: {
     
@@ -41,6 +44,9 @@ export default new Vuex.Store({
     },
     setVideoList(state, videoList) {
       state.videoList = videoList
+    },
+    setVideoCards(state, videoCards) {
+      state.videoCards = videoCards
     },
   },
   // 操作异步操作mutation

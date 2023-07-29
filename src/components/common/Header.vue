@@ -22,7 +22,7 @@
             </div>
             <div class="right">
                 <div class="user">
-                    <div class="user-icon"></div>
+                    <div class="user-icon" :style="{'background-image':`url(${$store.state.user.userIcon})`}"></div>
                     <div class="user-detail">
                         <div class="user-info">
                             <div class="user-name">{{ $store.state.user?$store.state.user.nickname:'null' }}</div>
@@ -232,7 +232,7 @@
         width: 50px;
         height: 50px;
         border-radius: 25px;
-        background-image: url("../../assets/user.webp");
+        background-color: #e3e5e7;
         background-repeat: no-repeat;
         background-size: cover;
 

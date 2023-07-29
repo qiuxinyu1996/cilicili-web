@@ -1,11 +1,11 @@
 <template>
-    <div class="card">
-        <div class="card-img"></div>
+    <div class="card" @click="goto_player(videoCard)">
+        <div class="card-img" :style="{'background-image':`url(${videoCard.cover})`}"></div>
         <div class="card-title">
-            12杆极限准度破局，特鲁姆普用准度捍卫准神称号，绝对视觉盛宴
+            {{ videoCard.title }}
         </div>
         <div class="card-author">
-            观复体育文化 · 6-24
+            {{ videoCard.uploaderName }} · {{ videoCard.uploadTime }}
         </div>
     </div>
 </template>
@@ -13,6 +13,33 @@
 <script>
     export default {
         name: 'Card',
+        props: [
+            'videoCard'
+        ],
+        methods: {
+            goto_player(videoCard) {
+                var videoId = videoCard.id
+                this.$axios.get('/api/video/getVideoList?videoId=' + videoId)
+                .then(
+                    (resp) => {
+                        localStorage.setItem('videoList', JSON.stringify(resp.data.data))
+                        this.$store.state.videoList = resp.data.data
+                    }
+                ).catch(
+                    (err) => {
+                        console.log(err)
+                    }
+                )
+            
+                this.$router.push({
+                    name: 'play',
+                    query: {
+                        vid: videoId,
+                        p: this.$store.state.videoList.current,
+                    }
+                })
+            }
+        }
     }
 </script>
 
@@ -32,7 +59,7 @@
         width: 300px;
         height: 170px;
         border-radius: 10px;
-        background-image: url('@/assets/2233.jpeg');
+        /* background-image: url('@/assets/2233.jpeg'); */
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -42,11 +69,15 @@
     }
     .card-title {
         width: 300px;
-        height: 50px;
+        height: 35px;
+        line-height: 35px;
         padding: 5px;
         box-sizing: border-box;
         color: #18191c;
         font-size: 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
         position: absolute;
         top: 170px;
@@ -65,7 +96,7 @@
         box-sizing: border-box;
 
         position: absolute;
-        top: 220px;
+        top: 210px;
         left: 0;
     }
 </style>

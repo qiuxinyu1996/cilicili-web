@@ -20,10 +20,9 @@
         methods: {
           goto_player(img) {
             var videoId = img.id
-            this.$axios.get('/api/video/getDetailList?videoId=' + videoId)
+            this.$axios.get('/api/video/getVideoList?videoId=' + videoId)
             .then(
                 (resp) => {
-                    console.log('this is getDetailList')
                     localStorage.setItem('videoList', JSON.stringify(resp.data.data))
                     this.$store.state.videoList = resp.data.data
                 }
@@ -33,20 +32,11 @@
                 }
             )
           
-            var player = {
-              videoId: img.id,
-              name: img.name,
-              source: img.source,
-              current: img.current,
-              total: img.total,
-            }
-            localStorage.setItem('player', JSON.stringify(player))
-            this.$store.commit('setPlayer',player)
             this.$router.push({
               name: 'play',
               query: {
-                vid: player.videoId,
-                p: player.current,
+                vid: videoId,
+                p: this.$store.state.videoList.current,
               }
             })
           }

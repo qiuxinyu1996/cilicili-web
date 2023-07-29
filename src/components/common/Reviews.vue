@@ -1,7 +1,11 @@
 <template>
     <div class="reviews">
+        <div class="review-total">
+            <div class="review-total-text">评论</div>
+            <div class="review-total-number">{{ $store.state.reviewList.length }}</div>
+        </div>
         <div class="my-review">
-            <div class="my-review-icon"></div>
+            <div class="my-review-icon" :style="{'background-image':`url(${$store.state.user.userIcon})`}"></div>
             <div class="my-review-input">
                 <el-input
                     type="textarea"
@@ -16,13 +20,13 @@
             </div>
         </div>
         <div class="other-review" v-if="JSON.stringify(reviewList) != '[]'">
-            <div class="review-wrapper" v-bind:style="{'z-index':999-index}" v-for="(review, index) in reviewList">
+            <div class="review-wrapper" :style="{'z-index':999-index}" v-for="(review, index) in reviewList">
                 <div v-if="index<displayFirstReview">
                     <div class="first-review">
-                        <Review  v-bind:style="{'z-index':999-index}" :review="review"></Review> 
+                        <Review  :style="{'z-index':999-index}" :review="review"></Review> 
                     </div>
                     <div class="second-review" v-for="(reply, kidIndex) in review.replyList">
-                        <Review v-if="kidIndex<displaySecondReview[index]"  v-bind:style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
+                        <Review v-if="kidIndex<displaySecondReview[index]"  :style="{'z-index':99-index-kidIndex}" :review="reply"></Review>
                         <div class="see-more" v-if="review.replyList.length>displaySecondReview[index] && kidIndex==displaySecondReview[index]-1" @click="displaySecondReview.splice(index,1,displaySecondReview[index]+3)">
                             展示更多评论
                         </div>
@@ -153,6 +157,36 @@
         width: 11200px;
         height: 300px;
     }
+    .review-total {
+        width: 1100px;
+        height: 50px;
+        
+        position: relative;
+    }
+    .review-total-text {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+        color: #18191c;
+
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translate(0, -50%);
+    }
+    .review-total-number {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 13px;
+        color: #9499a0;
+
+        position: absolute;
+        top: 50%;
+        left: 60px;
+        transform: translate(0, -50%);
+    }
     .my-review {
         width: 1100px;
         height: 100px;
@@ -164,7 +198,7 @@
         width: 60px;
         height: 60px;
         border-radius: 30px;
-        background-image: url('@/assets/user.webp');
+        background-color: #e3e5e7;
         background-repeat: no-repeat;
         background-size: cover;
 

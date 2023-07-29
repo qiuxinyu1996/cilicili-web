@@ -2,20 +2,28 @@
     <div class="review">
         <div class="header">
             <div class="user-icon-wrapper">
-                <div class="user-icon"></div>  
+                <div class="user-icon" :style="{'background-image':`url(${review.userIcon})`}"></div>  
                 <div class="user-info">
                     <div class="user-cover"></div>
                 </div>  
             </div>
             <div class="user-name">
                 {{ review.userName }}
-                <span class="user-level" v-bind:style="{backgroundColor:levelColor(review.userLevel)}">
+                <span class="user-level" :style="{backgroundColor:levelColor(review.userLevel)}">
                     &nbsp;&nbsp;Lv{{ review.userLevel }}&nbsp;&nbsp;
                 </span>
-                <span v-if="review.toReplyUserName">&nbsp;&nbsp;回复&nbsp;&nbsp;{{ review.toReplyUserName }}:&nbsp;&nbsp;{{ review.toReplyReviewContent }}</span>
             </div>
         </div>
         <div class="content">
+            <span v-if="review.toReplyUserName">回复</span>
+            <el-tooltip 
+                effect="dark"
+                offset="-100" 
+                :content="review.toReplyReviewContent" 
+                placement="top-end">
+                <span class="at-user" v-if="review.toReplyUserName">@{{ review.toReplyUserName }}:</span>
+            </el-tooltip>
+            
             {{ review.reviewContent }}
         </div>
         <div class="footer">
@@ -154,7 +162,7 @@
         width: 50px;
         height: 50px;
         border-radius: 25px;
-        background-image: url('@/assets/user.webp');
+        background-color: #e3e5e7;
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -282,5 +290,11 @@
         background-size: cover;
 
         position: absolute;
+    }
+    .at-user {
+        color: #008ac5;
+    }
+    .at-user:hover {
+        cursor: pointer;
     }
 </style>
