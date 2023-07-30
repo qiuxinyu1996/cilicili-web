@@ -19,9 +19,9 @@
 <script>
     export default {
         name: 'NumberList',
-        data(){
-            return {
-                selected: this.$route.query.p,
+        computed: {
+            selected() {
+                return this.$route.query.p
             }
         },
         methods: {

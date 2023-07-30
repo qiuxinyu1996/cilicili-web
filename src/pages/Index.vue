@@ -7,7 +7,7 @@
         </div>
         <div class="cards">
             <div class="card" v-for="(videoCard, index) in this.$store.state.videoCards" :key="index">
-                <Card :videoCard="videoCard"></Card>
+                <Card :videoCard="videoCard"></Card> 
             </div>
         </div>
     </div>

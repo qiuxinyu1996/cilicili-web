@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header" :style="{'background-image':`url(${$store.state.user.spaceCover})`}">
         <div class="header-content">
             <div class="left">
                 <div class="homepage" @click="to_homepage()">
@@ -25,22 +25,26 @@
                     <div class="user-icon" :style="{'background-image':`url(${$store.state.user.userIcon})`}"></div>
                     <div class="user-detail">
                         <div class="user-info">
-                            <div class="user-name">{{ $store.state.user?$store.state.user.nickname:'null' }}</div>
+                            <div class="user-name">
+                                {{ $store.state.user?$store.state.user.nickname:'null' }}
+                            </div>
                             <div class="user-account">
-                                <div class="user-level">Lv6</div>
-                                <div class="user-coin">硬币:860</div>
+                                <div class="user-level" :style="{backgroundColor:levelColor($store.state.user.userLevel)}">
+                                    Lv{{ $store.state.user.userLevel }}
+                                </div>
+                                <div class="user-coin">硬币:{{ $store.state.user.coin }}</div>
                             </div>
                             <div class="user-other">
                                 <div class="user-follow">
-                                    <div class="user-follow-count">999</div>
+                                    <div class="user-follow-count">{{ $store.state.user.follow }}</div>
                                     <div class="user-follow-text">关注</div>
                                 </div>
                                 <div class="user-fans">
-                                    <div class="user-follow-count">999</div>
+                                    <div class="user-follow-count">{{ $store.state.user.fans }}</div>
                                     <div class="user-follow-text">粉丝</div>
                                 </div>
                                 <div class="user-action">
-                                    <div class="user-follow-count">999</div>
+                                    <div class="user-follow-count">{{ $store.state.user.action }}</div>
                                     <div class="user-follow-text">动态</div>
                                 </div>
                             </div>
@@ -125,6 +129,24 @@
                         console.log(err)
                     }
                 )
+            },
+            levelColor(userLevel) {
+                switch (userLevel) {
+                    case 1:
+                        return 'rgb(186,191,186)'
+                    case 2:
+                        return 'rgb(158,200,160)'
+                    case 3:
+                        return 'rgb(144,203,236)'
+                    case 4:
+                        return 'rgb(242,190,146)'
+                    case 5:
+                        return 'rgb(220,12,58)'
+                    case 6:
+                        return 'rgb(220,90,79)'
+                    default:
+                        return 'white'
+                }
             }
         }
     }
@@ -134,7 +156,8 @@
     .header{
         width: 100%;
         height: 150px;
-        background-image: url("../../assets/diancipao.jpg");
+        background-color: #9499a0;
+        background-position-y: 50%;
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;

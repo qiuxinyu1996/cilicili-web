@@ -33,14 +33,15 @@
                         console.log(err)
                     }
                 )
-            
-                this.$router.push({
-                    name: 'play',
-                    query: {
-                        vid: videoId,
-                        p: this.$store.state.videoList.current,
-                    }
-                })
+                setTimeout(() => {
+                    this.$router.push({
+                        name: 'play',
+                        query: {
+                            vid: videoId,
+                            p: this.$store.state.videoList.current,
+                        }
+                    })
+                }, 500);
             }
         }
     }
@@ -71,7 +72,7 @@
         height: 50px;
         font-size: 15px;
         color: #18191c;
-        padding: 6px 6px;
+        padding: 8px 8px;
         box-sizing: border-box;
         
         position: absolute;

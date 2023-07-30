@@ -126,7 +126,6 @@
             window.onscroll = () =>{
                 if (getScrollHeight() - 50 <= getWindowHeight() + getDocumentTop()) {
                     this.displayFirstReview += 10
-                    console.log(this.displayFirstReview)
                 }      
             }
         }

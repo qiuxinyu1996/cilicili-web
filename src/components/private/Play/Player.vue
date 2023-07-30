@@ -1,15 +1,18 @@
 <template>
     <div class="player">
         <div class="video-title">
-            <h2>{{ this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].title }}</h2>       
+            <div class="video-title-text">
+                {{ this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].title }}     
+            </div>
+           <div class="video-title-other">
+            {{ this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].uploadTime }}     
+           </div>
         </div>
         <div class="video">
             <Video :src="src"></Video>
         </div>
         <div class="up-info">
-           <h2>
-                UID:{{ this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].uploaderId }}
-           </h2>
+           <UpperInfo :upperInfo="this.$store.state.videoList.listDetail[this.$store.state.videoList.current-1].uploader"></UpperInfo>
         </div>
         <div class="number-list-wrapper">
             <NumberList></NumberList>
@@ -30,13 +33,15 @@
     import NumberList from './Player/NumberList.vue';
     import Reviews from '@/components/common/Reviews.vue';
     import LinkCard from '@/components/private/Play/Player/LinkCard.vue'
+    import UpperInfo from './Player/UpperInfo.vue';
     export default {
         name: 'Player',
         components: {
             Video,
             NumberList,
             Reviews,
-            LinkCard
+            LinkCard,
+            UpperInfo
         },
         data() {
             return {
@@ -173,5 +178,27 @@
         top: 0;
         left: 50%;
         transform: translate(calc(-50% + 580px), 0);
+    }
+    .video-title-text {
+        width: 1100px;
+        height: 30px;
+        line-height: 30px;
+        color: #18191c;
+        font-size: 20px;
+
+        position: absolute;
+        top: 25px;
+        left: 0;
+    }
+    .video-title-other {
+        width: 1100px;
+        height: 20px;
+        line-height: 20px;
+        color: #9499a0;
+        font-size: 13px;
+
+        position: absolute;
+        top: 60px;
+        left: 0;
     }
 </style>

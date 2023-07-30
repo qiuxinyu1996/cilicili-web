@@ -4,7 +4,7 @@
             <div class="user-icon-wrapper">
                 <div class="user-icon" :style="{'background-image':`url(${review.userIcon})`}"></div>  
                 <div class="user-info">
-                    <div class="user-cover"></div>
+                    <UserCard :userInfo="review.reviewer"></UserCard>
                 </div>  
             </div>
             <div class="user-name">
@@ -59,8 +59,12 @@
 </template>
 
 <script>
+    import UserCard from '@/components/private/Play/Player/UserCard.vue'
     export default {
         name: 'Review', 
+        components: {
+            UserCard
+        },
         data() {
             return {
                 readyReply: false,
@@ -70,24 +74,6 @@
         methods: {
             reply() {
                 this.readyReply = !this.readyReply
-            },
-            levelColor(userLevel) {
-                switch (userLevel) {
-                    case 1:
-                        return 'gray'
-                    case 2:
-                        return 'yellow'
-                    case 3:
-                        return 'green'
-                    case 4:
-                        return 'yellow'
-                    case 5:
-                        return 'red'
-                    case 6:
-                        return 'blue'
-                    default:
-                        return 'white'
-                }
             },
             sendReply() {
                 if(this.replyText == '') {
@@ -131,6 +117,24 @@
                         this.$message.error('回复失败')
                     }
                 )
+            },
+            levelColor(userLevel) {
+                switch (userLevel) {
+                    case 1:
+                        return 'rgb(186,191,186)'
+                    case 2:
+                        return 'rgb(158,200,160)'
+                    case 3:
+                        return 'rgb(144,203,236)'
+                    case 4:
+                        return 'rgb(242,190,146)'
+                    case 5:
+                        return 'rgb(220,12,58)'
+                    case 6:
+                        return 'rgb(220,90,79)'
+                    default:
+                        return 'white'
+                }
             }
         },
         props: [
@@ -167,6 +171,8 @@
         background-size: cover;
 
         position: absolute;
+        left: 0;
+        top: 10px;
         z-index: 80;
     }
     .user-name {
@@ -233,8 +239,8 @@
         border-radius: 10px;
     }
     .user-info {
-        width: 450px;
-        height: 300px;
+        width: 370px;
+        height: 220px;
         border-radius: 10px;
         background-color: #ffffff;
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
@@ -242,7 +248,7 @@
 
         position: absolute;
         z-index: 90;
-        top: 30px;
+        top: 40px;
         left: 30px;
     }
     .user-icon-wrapper:hover .user-info {

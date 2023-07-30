@@ -31,8 +31,8 @@ import axios from 'axios';
         data() {
             return {
                 user: {
-                    username: '',
-                    password: ''
+                    username: 'test',
+                    password: 'test'
                 }
             }
         },
